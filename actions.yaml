@@ -1,0 +1,5 @@
+# Copyright 2021 Ubuntu
+# See LICENSE file for licensing details.
+
+get-admin-password:
+  description: Returns password for the admin user that is defined in `account-name` option.

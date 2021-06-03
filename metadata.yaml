@@ -1,0 +1,81 @@
+# Copyright 2021 Ubuntu
+# See LICENSE file for licensing details.
+
+name: drupal-k8s
+
+display-name: Drupal K8S
+
+summary: |
+  Charmed Drupal Operator deploys Drupal content management system (CMS) 
+  into a Kubernetes model.
+
+description: |
+  Charmed Drupal Operator deploys Drupal content management system (CMS) into 
+  a Kubernetes model. 
+
+  "[...] It's used to make many of the websites and applications you use every day. 
+  Drupal has great standard features, like easy content authoring, reliable 
+  performance, and excellent security. But what sets it apart is its flexibility; 
+  modularity is one of its core principles. Its tools help you build the versatile, 
+  structured content that dynamic web experiences need." 
+  -- https://www.drupal.org/about
+
+  This charmed operator deploys the Docker official Drupal image, maintained by the 
+  Docker community (https://hub.docker.com/_/drupal).
+
+  The operator also installs Drush CLI into the Drupal container. Drush is then used
+  for automating the installation of the Drupal site.
+
+tags:
+  - k8s
+  - cms
+
+containers:
+  drupal:
+    resource: drupal-image
+    modules:
+      - storage: html
+        location: /var/www/html/modules
+    profiles:
+      - storage: profiles
+        location: /var/www/html/profies
+    sites:
+      - storage: sites
+        location: /var/www/html/sites
+    themes:
+      - storage: themes
+        location: /var/www/html/themes
+
+resources:
+  drupal-image:
+    type: oci-image
+    description: "OCI image for drupal (e.g.: drupal)"
+    auto-fetch: true
+    upstream-source: "drupal"
+
+storage:
+  modules:
+    type: filesystem
+    description: Drupal modules, mounted in /var/www/html/modules
+    minimum-size: 1G
+    location: /var/www/html/modules
+  profiles:
+    type: filesystem
+    description: Drupal profiles, mounted in /var/www/html/profiles
+    minimum-size: 1G
+    location: /var/www/html/profiles
+  sites:
+    type: filesystem
+    description: Drupal sites, mounted in /var/www/html/sites
+    minimum-size: 1G
+    location: /var/www/html/sites
+  themes:
+    type: filesystem
+    description: Drupal themes, mounted in /var/www/html/themes
+    minimum-size: 1G
+    location: /var/www/html/themes
+
+requires:
+  db:
+    interface: pgsql
+    limit: 1

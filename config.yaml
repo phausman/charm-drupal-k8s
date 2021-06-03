@@ -1,0 +1,30 @@
+# Copyright 2021 Ubuntu
+# See LICENSE file for licensing details.
+
+options:
+  account-name:
+    default: admin
+    description: "Username for the admin user, defaults to admin."
+    type: string
+
+  account-password:
+    default:
+    description:
+      "Password for the admin user. Generated automatically by default.
+      Retrieve the generated password by running juju action `get-admin-password`."
+    type: string
+
+  account-mail:
+    default: admin@example.com
+    description: "Email address for the admin user, defaults to admin@example.com."
+    type: string
+
+  site-name:
+    default: "Hello, Drupal!"
+    description: "Site name, defaults to Hello, Drupal!."
+    type: string
+
+  site-mail:
+    default: "hello-drupal@example.com"
+    description: "Site e-mail, defaults to hello-drupal@example.com."
+    type: string
