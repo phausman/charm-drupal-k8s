@@ -25,7 +25,7 @@ This operator requires relation with PostgreSQL database. Run the following
 commands to deploy a simple model.
 
     # Deploy drupal-k8s
-    juju deploy cs:~phausman/drupal-k8s drupal
+    juju deploy drupal-k8s drupal --channel beta
 
     # Customize installation options (see more config options in config.yaml)
     juju config drupal site-name="Hello, Drupal Operator!"
