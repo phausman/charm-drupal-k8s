@@ -25,7 +25,7 @@ This operator requires relation with PostgreSQL database. Run the following
 commands to deploy a simple model.
 
     # Deploy drupal application
-    juju deploy drupal --channel beta
+    juju deploy drupal-k8s drupal --channel beta
  
     # Deploy PostgreSQL
     juju deploy --num-units 3 postgresql-k8s postgresql
@@ -69,10 +69,10 @@ Build and deploy a local version of the charm:
     charmcraft build
  
     # Deploy drupal
-    juju deploy ./drupal.charm --resource drupal-image=drupal
+    juju deploy ./drupal-k8s.charm --resource drupal-image=drupal drupal
 
     # Or refresh already deployed charm
-    juju refresh drupal --path=./drupal.charm
+    juju refresh drupal --path=./drupal-k8s.charm
 
 ## Testing
 

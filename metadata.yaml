@@ -1,7 +1,7 @@
 # Copyright 2021 Ubuntu
 # See LICENSE file for licensing details.
 
-name: drupal
+name: drupal-k8s
 
 display-name: Drupal
 
