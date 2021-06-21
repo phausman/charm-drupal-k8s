@@ -1,9 +1,9 @@
 # Copyright 2021 Ubuntu
 # See LICENSE file for licensing details.
 
-name: drupal-k8s
+name: drupal
 
-display-name: Drupal K8S
+display-name: Drupal
 
 summary: |
   Charmed Drupal Operator deploys Drupal content management system (CMS) 
