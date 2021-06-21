@@ -24,21 +24,17 @@ for automating the installation of the Drupal site.
 This operator requires relation with PostgreSQL database. Run the following 
 commands to deploy a simple model.
 
-    # Deploy drupal-k8s
-    juju deploy drupal-k8s drupal --channel beta
-
-    # Customize installation options (see more config options in config.yaml)
-    juju config drupal site-name="Hello, Drupal Operator!"
-    juju config drupal site-mail="hello@drupal-k8s.juju"
+    # Deploy drupal application
+    juju deploy drupal --channel beta
  
     # Deploy PostgreSQL
-    juju deploy --num-units 3 cs:~postgresql-charmers/postgresql-k8s postgresql
+    juju deploy --num-units 3 postgresql-k8s postgresql
  
     # Add database relation
     juju add-relation drupal:db postgresql:db
 
 Once the deployment settles and all units are in `active` / `idle` state, point 
-your browser to the IP address of the drupal-k8s unit.
+your browser to the IP address of the `drupal` unit.
 
 The operator generates admin's password if it is not explicitly configured. Retrieve 
 the generated password by running juju `get-admin-password` action as follows:
@@ -53,7 +49,7 @@ result.
 You can access logs from Drupal container (including Pebble logs and Apache logs) 
 by running `kubectl logs` command, e.g.:
 
-    kubectl logs <drupal-k8s-pod-name> \
+    kubectl logs <drupal-pod-name> \
       --container drupal --namespace <juju-model-name> --follow 
 
 ## Developing
@@ -72,11 +68,11 @@ Build and deploy a local version of the charm:
     # Build the charm
     charmcraft build
  
-    # Deploy drupal-k8s
-    juju deploy ./drupal-k8s.charm --resource drupal-image=drupal drupal
+    # Deploy drupal
+    juju deploy ./drupal.charm --resource drupal-image=drupal
 
     # Or refresh already deployed charm
-    juju refresh drupal --path=./drupal-k8s.charm
+    juju refresh drupal --path=./drupal.charm
 
 ## Testing
 
@@ -87,16 +83,22 @@ operator behaviour without full deployment. Just `run_tests`:
 
 ## Further work
 
-- Add support for MySQL and SQLite databases,
+- Implement a relation to nginx-ingress-integrator (with `service-hostname` by default
+set to `self.app.name`)
 
-- Implement High Availability, share `sites`, `modules`, `profiles` and `themes`
-volumes between `drupal-k8s` units,
+- PostgreSQL is a sane default for a database. Optional support for MySQL driver 
+could be added in the future,
+
+- Implement support for High Availability. Make it possible to deploy multiple `drupal`
+units. Figure out the way for sharing storage between `drupal` units, i.e. `sites`, 
+`modules`, `profiles` and `themes` directories.
 
 - Make it possible to attach already existing `sites`, `modules`, `profiles` 
 or `themes` volumes,
 
 - Provide an easy access for Drush CLI -- an industry standard tool for interacting
-with and managing Drupal sites,
+with and managing Drupal sites. This could be implemented as juju actions. 
+Alternatively, drush could be accessed after ssh'ing to the `drupal` unit.
 
 - Consider deploying Drush in a separate container, instead of installing it inside
 the Drupal container,
