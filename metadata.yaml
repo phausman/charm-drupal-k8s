@@ -30,6 +30,8 @@ tags:
   - k8s
   - cms
 
+docs: https://discourse.charmhub.io/t/drupal-k8s-docs-index/4722
+
 containers:
   drupal:
     resource: drupal-image
